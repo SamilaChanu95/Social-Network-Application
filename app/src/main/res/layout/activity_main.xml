@@ -7,9 +7,19 @@
     tools:context=".MainActivity">
 
     <RelativeLayout
-        android:layout_width=""
-        android:layout_height="">
-        
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/main_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/all_users_post_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </FrameLayout>
     </RelativeLayout>
 
 </androidx.drawerlayout.widget.DrawerLayout>
