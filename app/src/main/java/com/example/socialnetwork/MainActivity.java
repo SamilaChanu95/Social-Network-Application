@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
@@ -26,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         postList = (RecyclerView) findViewById(R.id.all_users_post_list);
 
+        View navView = navigationView.inflateHeaderView(R.layout.navigation_header);
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item)
@@ -36,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    @Override
+
     private void UserMenuSelector(MenuItem item) {
 
         switch (item.getItemId()) {
