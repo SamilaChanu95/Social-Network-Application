@@ -52,7 +52,17 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (actionBarDrawerToggle.onOptionsItemSelected(item))
+        {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     private void UserMenuSelector(MenuItem item) {
 
         switch (item.getItemId()) {
