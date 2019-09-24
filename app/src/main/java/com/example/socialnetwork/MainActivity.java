@@ -56,7 +56,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    
+    @Override /* special method that check the user register or not */
+    protected void onStart() {
+        super.onStart();
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
