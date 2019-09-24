@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
         Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
         loginIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(loginIntent);
+        startActivity(loginIntent); //login intent eka mulinma laba dei
         finish();
     }
 
