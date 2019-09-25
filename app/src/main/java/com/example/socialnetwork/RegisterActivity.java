@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.text.TextUtilsCompat;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -88,6 +89,8 @@ public class RegisterActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()) {
 
+                        SendUserToSetupActivity();
+
                         Toast.makeText(RegisterActivity.this, "You are authenticated successfully...", Toast.LENGTH_SHORT).show();
                         loadingBar.dismiss();
                     }
@@ -102,5 +105,13 @@ public class RegisterActivity extends AppCompatActivity {
 
         }
 
+    }
+
+    private void SendUserToSetupActivity() {
+                                        //dan inna activity eka  //data pass krnn oni activity eka
+        Intent setupIntent = new Intent(RegisterActivity.this, SetupActivity.class);
+        setupIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); //using the validation part
+        startActivity(setupIntent);
+        finish();
     }
 }
