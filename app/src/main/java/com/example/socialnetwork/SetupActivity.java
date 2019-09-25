@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -75,6 +76,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
         }
         else {
 
+            loadingBar.setTitle("Saving information");
+            loadingBar.setMessage("Please wait, while we are creating your new account...");
+            loadingBar.show();
+            loadingBar.setCanceledOnTouchOutside(true);
+
             HashMap userMap = new HashMap();
             userMap.put("username",username);
             userMap.put("fullname",fullname);
@@ -90,15 +96,28 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
                     if(task.isSuccessful()) {
 
+                        SendUserToMainActivity();
                         Toast.makeText(SetupActivity.this, "Your account is created successfully.", Toast.LENGTH_SHORT).show();
+                        loadingBar.dismiss();
                     }
                     else {
                         String message = task.getException().getMessage();
                         Toast.makeText(SetupActivity.this, "Error occured: "+message , Toast.LENGTH_SHORT).show();
+                        loadingBar.dismiss();
                     }
                 }
             });
 
         }
+
+    }
+
+    private void SendUserToMainActivity() {
+
+        Intent mainIntent = new Intent(SetupActivity.this, MainActivity.class);
+        mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(mainIntent);
+        finish();
+
     }
 }
