@@ -9,11 +9,11 @@
 
     <ImageView
         android:id="@+id/login_icon"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="25dp"
         app:srcCompat="@drawable/logo" />
 
     <EditText
@@ -23,7 +23,7 @@
         android:layout_below="@+id/login_icon"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="0dp"
         android:layout_marginLeft="7dp"
         android:layout_marginRight="7dp"
         android:background="@drawable/inputs"
@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/login_email"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="23dp"
         android:layout_marginLeft="7dp"
         android:layout_marginRight="7dp"
         android:background="@drawable/inputs"
@@ -55,7 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/login_password"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="23dp"
         android:background="@drawable/button"
         android:padding="12dp"
         android:layout_marginLeft="7dp"
