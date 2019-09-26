@@ -22,6 +22,9 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import org.w3c.dom.Text;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class RegisterActivity extends AppCompatActivity {
 
     private EditText UserEmail, UserPassword, UserConfirmPassword;
@@ -45,10 +48,38 @@ public class RegisterActivity extends AppCompatActivity {
         CreateAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CreateNewAccount();
+                if (isValidPassword(UserPassword.getText().toString().trim())) {
+                    Toast.makeText(RegisterActivity.this, "Valid", Toast.LENGTH_SHORT).show();
+                    CreateNewAccount();
+                } else {
+                    Toast.makeText(RegisterActivity.this, "Invalid and one digit,uppercase letter,lowercase letter,special character must occur at least and no white space and at least six characters.", Toast.LENGTH_SHORT).show();
+                }
+
             }
 
         });
+    }
+
+    public static boolean isEmailValid(String email) {
+        final String EMAIL_PATTERN =
+                "^[_a-z0-9-]+(\\.[_a-z0-9-]+)*@[a-z0-9]+(\\.[a-z0-9]+)*(\\.[a-z]{3})$";
+        final Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+        final Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
+    public boolean isValidPassword(final String password) {
+
+        Pattern pattern;
+        Matcher matcher;
+
+        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[*@#$%^&+=])(?=\\S+$).{4,}$";
+
+        pattern = Pattern.compile(PASSWORD_PATTERN);
+        matcher = pattern.matcher(password);
+
+        return matcher.matches();
+
     }
 
     private void CreateNewAccount() {
@@ -60,6 +91,11 @@ public class RegisterActivity extends AppCompatActivity {
         if(TextUtils.isEmpty(email)) {
 
             Toast.makeText(this, "Please enter your email address...", Toast.LENGTH_SHORT).show();
+
+        }
+        if (!isEmailValid(email)){
+
+            Toast.makeText(this,"Your email is invalid...", Toast.LENGTH_SHORT).show();
 
         }
         else if(TextUtils.isEmpty(password)) {
