@@ -90,6 +90,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
                     //we can helping the Picasso library we can display the profile image
                     Picasso.with(SetupActivity.this).load(image).placeholder(R.drawable.profile).into(ProfileImage);
+                    Toast.makeText(SetupActivity.this, "Picasso OK.", Toast.LENGTH_SHORT).show();
                 }
             }
 
