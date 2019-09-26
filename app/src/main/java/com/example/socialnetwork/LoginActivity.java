@@ -18,6 +18,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class LoginActivity extends AppCompatActivity {
 
     private Button LoginButton;
@@ -71,6 +74,14 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 
+    public static boolean isEmailValid(String email) {
+        final String EMAIL_PATTERN =
+                "^[_a-z0-9-]+(\\.[_a-z0-9-]+)*@[a-z0-9]+(\\.[a-z0-9]+)*(\\.[a-z]{3})$";
+        final Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+        final Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
     private void AllowingUserToLogin() {
         String email = UserEmail.getText().toString();
         String password = UserPassword.getText().toString();
@@ -79,6 +90,9 @@ public class LoginActivity extends AppCompatActivity {
         }
         if(TextUtils.isEmpty(password)) {
             Toast.makeText(LoginActivity.this,"Please write your password...", Toast.LENGTH_SHORT).show();
+        }
+        if (!isEmailValid(email)){
+            Toast.makeText(LoginActivity.this,"Your email is invalid...", Toast.LENGTH_SHORT).show();
         }
         else {
 
