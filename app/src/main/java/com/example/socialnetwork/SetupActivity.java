@@ -1,10 +1,12 @@
  package com.example.socialnetwork;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -17,6 +19,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.util.HashMap;
 
@@ -33,6 +37,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
     private DatabaseReference UsersRef;
 
     String currentUserID;
+    final static int Gallery_Pick = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,9 +62,43 @@ import de.hdodenhof.circleimageview.CircleImageView;
                 SaveAccountSetupInformation();
             }
         });
+
+        ProfileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent galleryIntent = new Intent();
+                galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
+                galleryIntent.setType("image/*");
+                startActivityForResult(galleryIntent, Gallery_Pick);
+            }
+        });
     }
 
-    private void SaveAccountSetupInformation() {
+     @Override
+     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+         super.onActivityResult(requestCode, resultCode, data);
+
+         if(requestCode == Gallery_Pick && resultCode == RESULT_OK && data != null) {
+
+             Uri ImageUri = data.getData();//get tha data
+
+             // crop the image
+             CropImage.activity().setGuidelines(CropImageView.Guidelines.ON).setAspectRatio(1,1).start(this);
+         }
+
+         if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+
+             CropImage.ActivityResult result = CropImage.getActivityResult(data);
+
+             if(requestCode == RESULT_OK) {
+
+                Uri resultUri = result.getUri(); // get the last result of cropped image
+             }
+
+         }
+     }
+
+     private void SaveAccountSetupInformation() {
 
         String username = UserName.getText().toString();
         String fullname = FullName.getText().toString();
@@ -91,6 +130,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
             userMap.put("relationshipstatus","none");
 
             UsersRef.updateChildren(userMap).addOnCompleteListener(new OnCompleteListener() {
+
                 @Override
                 public void onComplete(@NonNull Task task) {
 
@@ -99,8 +139,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
                         SendUserToMainActivity();
                         Toast.makeText(SetupActivity.this, "Your account is created successfully.", Toast.LENGTH_SHORT).show();
                         loadingBar.dismiss();
+
                     }
                     else {
+
                         String message = task.getException().getMessage();
                         Toast.makeText(SetupActivity.this, "Error occured: "+message , Toast.LENGTH_SHORT).show();
                         loadingBar.dismiss();
